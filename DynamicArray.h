@@ -27,13 +27,16 @@ public:
 
 template <typename T>
 DynamicArray<T>::DynamicArray(int cap) {
-    data = nullptr;
+    capacity = (cap < 1) ? 1 : cap;
     count = 0;
-    capacity = cap;
+    data = new T[capacity];
+    invalidItem = T();
 }
 
 template <typename T>
-DynamicArray<T>::~DynamicArray() {}
+DynamicArray<T>::~DynamicArray() {
+    delete[] data;
+}
 
 template <typename T>
 void DynamicArray<T>::grow() {}
