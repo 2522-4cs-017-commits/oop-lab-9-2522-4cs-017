@@ -39,10 +39,23 @@ DynamicArray<T>::~DynamicArray() {
 }
 
 template <typename T>
-void DynamicArray<T>::grow() {}
+void DynamicArray<T>::grow() {
+    capacity *= 2;
+    T* newData = new T[capacity];
+    for (int i = 0; i < count; i++) {
+        newData[i] = data[i];
+    }
+    delete[] data;
+    data = newData;
+}
 
 template <typename T>
-void DynamicArray<T>::add(const T& value) {}
+void DynamicArray<T>::add(const T& value) {
+    if (count == capacity) {
+        grow();
+    }
+    data[count++] = value;
+}
 
 template <typename T>
 bool DynamicArray<T>::removeAt(int index) { return false; }
