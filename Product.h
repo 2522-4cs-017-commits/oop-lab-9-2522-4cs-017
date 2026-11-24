@@ -25,6 +25,23 @@ public:
     double stockValue() const {
         return price * quantity;
     }
+
+    bool operator<(const Product& other) const {
+        return price < other.price;
+    }
+
+    bool operator>(const Product& other) const {
+        return price > other.price;
+    }
+
+    bool operator==(const Product& other) const {
+        return name == other.name;
+    }
+
+    friend ostream& operator<<(ostream& out, const Product& p) {
+        out << p.name << " | Rs. " << p.price << " | qty " << p.quantity;
+        return out;
+    }
 };
 
 #endif
