@@ -58,15 +58,34 @@ void DynamicArray<T>::add(const T& value) {
 }
 
 template <typename T>
-bool DynamicArray<T>::removeAt(int index) { return false; }
+bool DynamicArray<T>::removeAt(int index) {
+    if (index < 0 || index >= count) {
+        return false;
+    }
+    for (int i = index; i < count - 1; i++) {
+        data[i] = data[i + 1];
+    }
+    count--;
+    return true;
+}
 
 template <typename T>
-T& DynamicArray<T>::operator[](int index) { return invalidItem; }
+T& DynamicArray<T>::operator[](int index) {
+    if (index < 0 || index >= count) {
+        cout << "Invalid index " << index << endl;
+        return invalidItem;
+    }
+    return data[index];
+}
 
 template <typename T>
-int DynamicArray<T>::size() const { return 0; }
+int DynamicArray<T>::size() const {
+    return count;
+}
 
 template <typename T>
-bool DynamicArray<T>::isEmpty() const { return true; }
+bool DynamicArray<T>::isEmpty() const {
+    return count == 0;
+}
 
 #endif
