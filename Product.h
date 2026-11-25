@@ -27,6 +27,22 @@ public:
         return price * quantity;
     }
 
+    bool operator<(const Product& other) const {   // by price
+        return price < other.price;
+    }
+
+    bool operator>(const Product& other) const {   // by price
+        return price > other.price;
+    }
+
+    bool operator==(const Product& other) const {  // by name
+        return name == other.name;
+    }
+
+    friend ostream& operator<<(ostream& out, const Product& p) {
+        out << p.name << " | Rs. " << p.price << " | qty " << p.quantity;
+        return out;
+    }
 };
 
 #endif
