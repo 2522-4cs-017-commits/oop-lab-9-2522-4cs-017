@@ -27,30 +27,65 @@ public:
 
 template <typename T>
 DynamicArray<T>::DynamicArray(int cap) {
-    data = nullptr;
+    capacity = (cap < 1) ? 1 : cap;
     count = 0;
-    capacity = cap;
+    data = new T[capacity];
+    invalidItem = T();
 }
 
 template <typename T>
-DynamicArray<T>::~DynamicArray() {}
+DynamicArray<T>::~DynamicArray() {
+    delete[] data;
+}
 
 template <typename T>
-void DynamicArray<T>::grow() {}
+void DynamicArray<T>::grow() {
+    capacity *= 2;
+    T* newData = new T[capacity];
+    for (int i = 0; i < count; i++) {
+        newData[i] = data[i];
+    }
+    delete[] data;
+    data = newData;
+}
 
 template <typename T>
-void DynamicArray<T>::add(const T& value) {}
+void DynamicArray<T>::add(const T& value) {
+    if (count == capacity) {
+        grow();
+    }
+    data[count++] = value;
+}
 
 template <typename T>
-bool DynamicArray<T>::removeAt(int index) { return false; }
+bool DynamicArray<T>::removeAt(int index) {
+    if (index < 0 || index >= count) {
+        return false;
+    }
+    for (int i = index; i < count - 1; i++) {
+        data[i] = data[i + 1];
+    }
+    count--;
+    return true;
+}
 
 template <typename T>
-T& DynamicArray<T>::operator[](int index) { return invalidItem; }
+T& DynamicArray<T>::operator[](int index) {
+    if (index < 0 || index >= count) {
+        cout << "Invalid index " << index << endl;
+        return invalidItem;
+    }
+    return data[index];
+}
 
 template <typename T>
-int DynamicArray<T>::size() const { return 0; }
+int DynamicArray<T>::size() const {
+    return count;
+}
 
 template <typename T>
-bool DynamicArray<T>::isEmpty() const { return true; }
+bool DynamicArray<T>::isEmpty() const {
+    return count == 0;
+}
 
 #endif
